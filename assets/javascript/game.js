@@ -40,22 +40,22 @@ var gameData = {
 		leia: {
 			bg: 'assets/images/leia-bg.jpg',
 			hp: 140,
-			ap: 40
+			ap: 6
 			},
 		chewbacca: {
 			bg: 'assets/images/chewbacca-bg.jpg',
 			hp: 180,
-			ap: 80
+			ap: 8
 			},
 		phasma: {
 			bg: 'assets/images/phasma-bg.jpg',
 			hp: 140,
-			ap: 70
+			ap: 10
 			},
 		kylo: {
 			bg: 'assets/images/kylo-bg.jpg',
 			hp: 160,
-			ap: 90
+			ap: 11
 			}
 		},
 	defendersRemaining: 4,	
@@ -68,21 +68,49 @@ var gameData = {
 	function chooser(){
 		if (gameData.choice == 'user') {
 			userChar=this;
+			// set base power; we'll need this in the attack round
+			basePower=gameData.chars[this.id].ap;
 			$(userChar).off().css('cursor','auto');
 			$('#userCharacter').append(userChar);
 			$('#instructions').html('Choose an opponent');
 			
 			// reset background image to match user character
-			$('body').css('background-image','url('+gameData.chars[this.id].bg+')').css('background-position','right');
+			$('body').css('background-image','url('+gameData.chars[this.id].bg+')').css('background-position','right').css('color','#fff');
+			$('.character-box p').css('color','#000');
 			gameData.choice = 'opponent'
 		}
 		else if (gameData.choice == 'opponent') {
 			opponent=this;
-			$(opponent).off().css('cursor','auto');
+			// turn off all click listeners
+			$(".character-box").off().css('cursor','auto');
+			
+			// move choice of opponent to 'defender' area
 			$('#defender').append(opponent);
-			$('#instructions').html('Time to attack!')
+			$('#instructions').html('Time to attack!');
+			$('#attackButton').fadeIn('slow').on("click",attack);
 		}
 	}
 
+	function attack() {
+		var user = gameData.chars[userChar.id];
+		var opp = gameData.chars[opponent.id];
+		
+		// user attacks
+		opp.hp=opp.hp-user.ap;
+
+		// opponent counter attacks
+		user.hp=user.hp-opp.ap;
+
+		// user attack power always rises by base power for next round
+		user.ap=user.ap+basePower;
+
+		// update health point display
+		$(userChar).children(".hp").html(user.hp);
+		$(opponent).children(".hp").html(opp.hp);
+		
+		// to do: calculate results
+		console.log('user hp: '+user.hp+'; opp hp: '+opp.hp+'; user ap: '+user.ap);
+		
+	}
+
 	});  // end doc ready
-//$(this).append("<p>Health: "+gameData[$(this).id].hp+"</p>")

@@ -36,3 +36,7 @@ body {
 #messages-wrapper h1 {
 	text-align: center;
 }
+#attackButton {
+	display: none;
+	margin: 40px 0;
+}
