@@ -1,6 +1,7 @@
 body {
 	background: url(../images/background.jpg);
 	background-size: cover;
+	background-position: right;
 }
 .character-box {
 	background-size: cover;
@@ -33,7 +34,7 @@ body {
 #kylo {
 	background-image: url(../images/kylo.jpg);
 }
-#messages-wrapper h1 {
+#messages-wrapper {
 	text-align: center;
 }
 #attackButton {

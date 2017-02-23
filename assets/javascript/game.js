@@ -75,7 +75,7 @@ var gameData = {
 			$('#instructions').html('Choose an opponent');
 			
 			// reset background image to match user character
-			$('body').css('background-image','url('+gameData.chars[this.id].bg+')').css('background-position','right').css('color','#fff');
+			$('body').css('background-image','url('+gameData.chars[this.id].bg+')').css('color','#fff');
 			$('.character-box p').css('color','#000');
 			gameData.choice = 'opponent'
 		}
@@ -105,8 +105,8 @@ var gameData = {
 		user.ap=user.ap+basePower;
 
 		// update health point display
-		$(userChar).children(".hp").html(user.hp);
-		$(opponent).children(".hp").html(opp.hp);
+		$(userChar).children(".hp").html('Health: '+user.hp);
+		$(opponent).children(".hp").html('Health: '+opp.hp);
 		
 		// to do: calculate results
 		console.log('user hp: '+user.hp+'; opp hp: '+opp.hp+'; user ap: '+user.ap);
