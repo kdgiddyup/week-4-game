@@ -2,3 +2,37 @@ body {
 	background: url(../images/background.jpg);
 	background-size: cover;
 }
+.character-box {
+	background-size: cover;
+	max-width: 200px;
+	height: 130px;
+	cursor: pointer;
+	}
+.character-box p {
+	background-color: #fff;
+	opacity: .9;
+	width: 100%;
+	position: absolute;
+	width: 100%;
+	padding: 2px 1px;
+	margin: 0 0 0 -15px;
+	text-align: center;
+}
+.character-box p.hp {
+	bottom: 0;
+}
+#leia {
+	background-image: url(../images/leia.jpg);
+}
+#chewbacca {
+	background-image: url(../images/chewbacca.jpg);
+}
+#phasma {
+	background-image: url(../images/phasma.jpg);
+}
+#kylo {
+	background-image: url(../images/kylo.jpg);
+}
+#messages-wrapper h1 {
+	text-align: center;
+}

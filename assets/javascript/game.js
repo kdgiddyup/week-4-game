@@ -27,32 +27,62 @@ Game flow
 
 Variables
 ----------------
-gameTracker = {
-	chars: {
-		leia: {
-			image: assets/images/leia.jpg,
-			hp: <health points>,
-			ap: <attack points>
-			},
-		chewbacca: {
-			image: assets/images/chewbacca.jpg,
-			hp: <health points>,
-			ap: <attack points>
-			},
-		phasma: {
-			image: assets/images/phasma.jpg,
-			hp: <health points>,
-			ap: <attack points>
-			},
-		kylo: {
-			image: assets/images/kylo.jpg,
-			hp: <health points>,
-			ap: <attack points>
-			}
-		},
-	defendersRemaining:4	
-	}
+
 
 userChar will be one of the char objects assigned to it by user choice
 opponent will be one of the remaining char objects assigned to it by user choice
 */
+
+$(document).ready(function(){
+
+var gameData = {
+	chars: {
+		leia: {
+			bg: 'assets/images/leia-bg.jpg',
+			hp: 140,
+			ap: 40
+			},
+		chewbacca: {
+			bg: 'assets/images/chewbacca-bg.jpg',
+			hp: 180,
+			ap: 80
+			},
+		phasma: {
+			bg: 'assets/images/phasma-bg.jpg',
+			hp: 140,
+			ap: 70
+			},
+		kylo: {
+			bg: 'assets/images/kylo-bg.jpg',
+			hp: 160,
+			ap: 90
+			}
+		},
+	defendersRemaining: 4,	
+	choice: 'user'
+	}
+	$(".character-box").each(function(){
+		$(this).append('<p class="hp">Health: '+gameData.chars[this.id].hp+'</p>').on("click",chooser)
+	});
+
+	function chooser(){
+		if (gameData.choice == 'user') {
+			userChar=this;
+			$(userChar).off().css('cursor','auto');
+			$('#userCharacter').append(userChar);
+			$('#instructions').html('Choose an opponent');
+			
+			// reset background image to match user character
+			$('body').css('background-image','url('+gameData.chars[this.id].bg+')').css('background-position','right');
+			gameData.choice = 'opponent'
+		}
+		else if (gameData.choice == 'opponent') {
+			opponent=this;
+			$(opponent).off().css('cursor','auto');
+			$('#defender').append(opponent);
+			$('#instructions').html('Time to attack!')
+		}
+	}
+
+	});  // end doc ready
+//$(this).append("<p>Health: "+gameData[$(this).id].hp+"</p>")

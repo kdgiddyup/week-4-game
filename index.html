@@ -9,15 +9,53 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta property="og:image" content=""/>
     <link rel="shortcut icon" href="">
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
-    <script type="text/javascript" src="assets/javascript/game.js"></script>
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
   	<title>Star Wars rpg | Kelly Davis</title>
  </head>
  <body>
+    <div id="gameStage" class="container">
+      <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-9 col-xs-12">
+            <div id="characters" class="row">
+              <div id="leia" class="character-box col-lg-3 col-md-3 col-sm-3 col-sx-6">
+                <p>Princess Leia</p>
+              </div>
+              <div id="chewbacca" class="character-box col-lg-3 col-md-3 col-sm-3 col-sx-6">
+                <p>Chewbacca</p>
+              </div>
+              <div id="phasma" class="character-box col-lg-3 col-md-3 col-sm-3 col-sx-6">
+                <p>Capt. Phasma</p>
+              </div>
+              <div id="kylo" class="character-box col-lg-3 col-md-3 col-sm-3 col-sx-6">
+                <p>Kylo Ren</p>
+              </div>
+             </div>        
+             
+             <div class="row">  
+                <div id="userCharacter" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <h2>Your character</h2>
+                </div>
+                <div id="defender" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <h2>Defender</h2>
+                </div>
+              </div>
+        </div><!-- /column -->
+        
+        <div id="messages-wrapper" class="col-lg-6 col-md-6 col-sm-3 col-xs-12">
+            <div class="row" id="messages">
+              <div class="col-lg-12">
+                <h1>Star Wars RBG!</h1>
+                <p id="instructions">Choose a character</p>
+              </div>
+            </div>
+        </div><!-- /column--> 
 
+      </div><!-- /row -->
+    </div><!-- end game container -->
 
  </body>  
  </html>
