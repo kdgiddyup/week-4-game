@@ -61,9 +61,11 @@ var gameData = {
 	defendersRemaining: 4,	
 	choice: 'user'
 	}
-	$(".character-box").each(function(){
-		$(this).append('<p class="hp">Health: '+gameData.chars[this.id].hp+'</p>').on("click",chooser)
-	});
+
+	// fx is the sound effects player object
+	var fx = document.createElement('audio');
+
+	clicksOn();
 
 	function chooser(){
 		if (gameData.choice == 'user') {
@@ -71,7 +73,7 @@ var gameData = {
 			// set base power; we'll need this in the attack round
 			basePower=gameData.chars[this.id].ap;
 			$(userChar).off().css('cursor','auto');
-			$('#userCharacter').append(userChar);
+			$('#userCharacter').append("<h2>Your character</h2>").append(userChar);
 			$('#instructions').html('Choose an opponent');
 			
 			// reset background image to match user character
@@ -85,31 +87,75 @@ var gameData = {
 			$(".character-box").off().css('cursor','auto');
 			
 			// move choice of opponent to 'defender' area
-			$('#defender').append(opponent);
+			$('#defender').append("<h2>Defender</h2>").append(opponent);
 			$('#instructions').html('Time to attack!');
 			$('#attackButton').fadeIn('slow').on("click",attack);
 		}
 	}
 
+	function clicksOn() {
+		$(".character-box").each(function(){
+		$(this).append('<p class="hp">Health: '+gameData.chars[this.id].hp+'</p>').on("click",chooser).css('color','#000')
+		});
+	};
+	
 	function attack() {
+		// choose random sound file and play it
+		var soundfile = Math.floor(Math.random()*5+1);
+		fx.setAttribute('src','assets/sounds/sound'+soundfile+'.mp3');
+		fx.play();
+		
 		var user = gameData.chars[userChar.id];
 		var opp = gameData.chars[opponent.id];
 		
 		// user attacks
 		opp.hp=opp.hp-user.ap;
+		
+		// user attack power goes up
+		user.ap=user.ap+basePower;
+
+		// is opponent defeated?
+		if (opp.hp <= 0) {
+			// defender count decrements
+			gameData.defendersRemaining--;
+			// no defenders left?
+			if (gameData.defendersRemaining==0)
+				gameOver('win')
+			else 
+				//round is over but not game
+				roundOver();
+			}
+		
+		else  
+			// just update opponent health points
+			$(opponent).children(".hp").html('Health: '+opp.hp);
 
 		// opponent counter attacks
 		user.hp=user.hp-opp.ap;
-
-		// user attack power always rises by base power for next round
-		user.ap=user.ap+basePower;
-
-		// update health point display
-		$(userChar).children(".hp").html('Health: '+user.hp);
-		$(opponent).children(".hp").html('Health: '+opp.hp);
+		if (user.hp <= 0) {
+			// user character health is at 0 - game over
+			user.hp = 0;
+			// update health point display
+			$(userChar).children(".hp").html('Health: '+user.hp);
+			gameOver('lose')
+			}
+		else // just update user HP
+			$(userChar).children(".hp").html('Health: '+user.hp);
 		
-		// to do: calculate results
-		console.log('user hp: '+user.hp+'; opp hp: '+opp.hp+'; user ap: '+user.ap);
+		// user attack power always rises by base power for next round
+		
+		
+		function roundOver(){
+			//remove defeated opponent from stage
+			$("#defender").empty();
+			
+			// hide attack button
+			$('#attackButton').fadeOut('slow');
+			// re-activate character divs
+			clicksOn();
+			// instruct player to choose new opponent
+			$('#instructions').html('Choose another opponent');
+		}
 		
 	}
 
