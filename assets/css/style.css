@@ -3,6 +3,9 @@ body {
 	background-size: cover;
 	background-position: right;
 }
+#characters {
+	margin-top: 20px;
+}
 .character-box {
 	background-size: cover;
 	max-width: 200px;
@@ -37,7 +40,14 @@ body {
 #messages-wrapper {
 	text-align: center;
 }
-#attackButton {
+#attackButton,#resetButton {
 	display: none;
 	margin: 40px 0;
+}
+#messages h1 {
+	font-size: 3em;
+	font-weight: bold;
+}
+#instructions {
+	font-size: 2em;
 }
