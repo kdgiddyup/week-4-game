@@ -38,11 +38,11 @@ $("#resetButton").on("click",reset);
 // fx is the audio player object, for sound fx
 var fx = document.createElement('audio');
 
-// add click listeners to character divs
-clicksOn();
-
 // make a clone of gameData to ease reset
 var resetData = jQuery.extend(true,{}, gameData);
+
+// add click listeners to character divs
+clicksOn();
 
 function chooser(){
 	if (gameData.choice == 'user') {
@@ -75,7 +75,7 @@ function chooser(){
 }
 
 // <this> in clicksOn function is each character div in the html for the user to choose from
-// we append health pts from gameData object and an event listener that invokes the chooser function, and adjusts cursor style to pointer
+// we append health pts from gameData object, remove any old click events and add new event listener that invokes the chooser function, and adjusts cursor style to pointer
 // we also change the font color because chooser changes the gamestage background
 function clicksOn() {
 	$(".character-box").off().each(function(){
@@ -133,7 +133,7 @@ function roundOver(){
 	gameData.defendersRemaining--;
 	
 	// any defenders left?
-	if (gameData.defendersRemaining <= 0)
+	if (gameData.defendersRemaining == 0)
 		gameOver(1)
 
 	else {
@@ -148,16 +148,17 @@ function roundOver(){
 function gameOver(win) {
 	if (win) {
 		// cue the victory march; make it a timeout to give the attack sound effect time to play
-		sound('assets/sounds/victory.mp3');
+		setTimeout(function(){sound('assets/sounds/victory.mp3')},1500);
 		$("#defender").empty();
 		$("#instructions").html('You are the victor! May the Force be with you!')
 	}
 	else {
 		// cue the dark side; make it a timeout to give the attack sound effect time to play
-		sound('assets/sounds/vader.mp3');
+		setTimeout(function(){sound('assets/sounds/vader.mp3')},1500);
 		$("#userCharacter").empty();
 		$("#instructions").html('You have been defeated by the Dark Side!')
 	}
+	
 	// hide attack button 
 	$("#attackButton").fadeOut("slow");
 	
@@ -172,7 +173,7 @@ function reset() {
 	soundOff();
 	
 	// set gameData and game message to initial values
-	gameData = resetData;
+	gameData = jQuery.extend(true,{}, resetData);
 	$("#instructions").html("Choose a character");
 
 	
@@ -184,8 +185,6 @@ function reset() {
 	$(opponents).each(function(){
 		$("#characters").append(this)
 		});
-
-	// restore click listeners on character divs
 	clicksOn();
 
 	// hide reset button
@@ -194,7 +193,7 @@ function reset() {
 	//reset body background
 	$("body").css("background-image","url(assets/images/background.jpg");
 
-}  // end click function on reset button
+}  // end reset function
 
 function sound(file) {
 	fx.setAttribute('src',file);
